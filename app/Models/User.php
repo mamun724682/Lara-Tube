@@ -56,4 +56,10 @@ class User extends Authenticatable
             $model->{$model->getKeyName()} = (string) Str::uuid();
         });
     }
+
+    // Relations
+    public function channel()
+    {
+        return $this->hasOne(Channel::class);
+    }
 }

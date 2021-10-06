@@ -10,6 +10,8 @@ class Model extends BaseModel
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public $incrementing = false;
 
     protected static function boot()
