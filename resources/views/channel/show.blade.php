@@ -28,7 +28,7 @@
                                 <div class="profile_title">
                                     Name: <input type="text" name="name" value="{{ $channel->name }}">
                                     <div class="float-right">
-                                        <subscribe-button :subscriptions="{{ $channel->subscriptions }}" :channel="{{ $channel }}" inline-template>
+                                        <subscribe-button :initial-subscriptions="{{ $channel->subscriptions }}" :channel="{{ $channel }}" inline-template>
                                             <button @click="toggleSubscription" type="button" class="btn btn-danger">
                                                 @{{ owner ? '' : subscribed ? 'Unsubscribe' : 'Subscribe' }} @{{ count }} @{{ owner ? 'Subscriber' : '' }}
                                             </button>
@@ -63,7 +63,7 @@
                             <div class="profile_title">
                                 Name: {{ $channel->name }}
                                 <div class="float-right">
-                                    <subscribe-button :subscriptions="{{ $channel->subscriptions }}" :channel="{{ $channel }}" inline-template>
+                                    <subscribe-button :initial-subscriptions="{{ $channel->subscriptions }}" :channel="{{ $channel }}" inline-template>
                                         <button @click="toggleSubscription" type="button" class="btn btn-danger">
                                             @{{ owner ? '' : subscribed ? 'Unsubscribe' : 'Subscribe' }} @{{ count }} @{{ owner ? 'Subscriber' : '' }}
                                         </button>

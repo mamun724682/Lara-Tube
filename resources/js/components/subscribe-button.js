@@ -2,7 +2,7 @@ import numeral from 'numeral';
 
 Vue.component('subscribe-button', {
     props: {
-        subscriptions:{
+        initialSubscriptions:{
             type: Array,
             required: true,
             default: () => []
@@ -11,6 +11,11 @@ Vue.component('subscribe-button', {
             type: Object,
             required: true,
             default: () => ({})
+        }
+    },
+    data(){
+        return {
+            subscriptions: this.initialSubscriptions
         }
     },
     computed:{
@@ -56,9 +61,18 @@ Vue.component('subscribe-button', {
             }
 
             if(this.subscribed){
-                axios.delete(`/channels/${this.channel.id}/subscription/${this.subscription.id}`);
+                axios.delete(`/channels/${this.channel.id}/subscription/${this.subscription.id}`)
+                    .then(() => {
+                        this.subscriptions = this.subscriptions.filter(s => s.id != this.subscription.id)
+                    });
             }else {
-                axios.post(`/channels/${this.channel.id}/subscription`);
+                axios.post(`/channels/${this.channel.id}/subscription`)
+                    .then(response => {
+                        this.subscriptions = [
+                            ...this.subscriptions,
+                            response.data
+                        ]
+                    });
             }
         }
     }
