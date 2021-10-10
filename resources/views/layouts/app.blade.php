@@ -13,8 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}">
 </head>
 <body>
 <!-- Top navbar -->
@@ -125,8 +124,9 @@
             </a>
         </li>
 
-        <li class="has-subnav border-top">
-            <a href="library.html">
+        @auth
+            <li class="has-subnav border-top">
+                <a href="{{ route('upload.videos', auth()->user()->channel->id) }}">
              <span class="fa fa-2x">
 	            <svg style="display: block; height: 24px; width: 24px;margin: auto;" viewBox="0 0 24 24">
 				  <path
@@ -134,11 +134,13 @@
                       fill="#606060"></path>
 				</svg>
 			</span>
-                <span class="nav-text">
-              Library
+                    <span class="nav-text">
+              Upload Video
             </span>
-            </a>
-        </li>
+                </a>
+            </li>
+        @endauth
+
         <li class="has-subnav">
             <a href="history.html">
              <span class="fa fa-2x">
@@ -188,7 +190,7 @@
 <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="{{ asset('js/toastr.min.js') }}"></script>
 
 <script>
     $(document).ready(function () {

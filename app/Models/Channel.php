@@ -11,6 +11,7 @@ class Channel extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+    //Relations
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault();
@@ -21,6 +22,12 @@ class Channel extends Model implements HasMedia
         return $this->hasMany(Subscription::class);
     }
 
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    //Media library
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')

@@ -17,7 +17,6 @@
                                 <div class="channel-avatar-overlay" onclick="document.getElementById('image').click()">
                                     <i class="fa fa-camera-retro" aria-hidden="true" style="font-size: xxx-large;"></i>
                                 </div>
-                                {{--                            <img src="https://joeschmoe.io/api/v1/Youtube">--}}
                                 <img src="{{ $channel->image() }}" alt="">
                             </div>
                         </div>

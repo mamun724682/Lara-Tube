@@ -21,4 +21,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('channels', \App\Http\Controllers\ChannelController::class);
-Route::resource('channels/{channel}/subscription', \App\Http\Controllers\SubscriptionController::class)->only('store', 'destroy')->middleware('auth');
+
+Route::middleware('auth')->group(function (){
+    Route::resource('channels/{channel}/subscription', \App\Http\Controllers\SubscriptionController::class)->only('store', 'destroy');
+
+    Route::get('upload/{channel}/videos', [\App\Http\Controllers\UploadVideoController::class, 'index'])->name('upload.videos');
+    Route::post('upload/{channel}/videos', [\App\Http\Controllers\UploadVideoController::class, 'store']);
+});
