@@ -17,7 +17,7 @@ class UploadVideoController extends Controller
     public function store(Channel $channel)
     {
         $video = $channel->videos()->create([
-            'title' => \request()->title,
+            'title' => explode('.', \request()->title)[0],
             'path' => \request()->video->store("channel/{$channel->id}"),
         ]);
 

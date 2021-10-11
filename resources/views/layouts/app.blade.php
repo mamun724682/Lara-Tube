@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}">
+
+    @stack('style')
 </head>
 <body>
 <!-- Top navbar -->
@@ -79,7 +81,7 @@
 <!-- mobile top navbar -->
 
 <!-- sidebar -->
-<nav class="main-nav">
+<nav class="main-nav {{ request()->routeIs('video.show') ? 'desc_hide' : '' }}">
     <ul>
         <li class="">
             <a href="{{ route('home') }}">
@@ -182,7 +184,7 @@
 <!-- sidebar -->
 
 <!-- main content -->
-<div class="row main_container" id="app">
+<div class="{{ request()->routeIs('video.show') ? '' : 'row main_container' }}" id="app">
     @yield('content')
 </div>
 <!-- main content -->
@@ -254,5 +256,6 @@
     @endif
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
+@stack('script')
 </body>
 </html>
