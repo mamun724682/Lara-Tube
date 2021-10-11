@@ -38,10 +38,10 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user1->id
         ]);
 
-        Subscription::factory(10000)->create([
+        Subscription::factory(1000)->create([
             'channel_id' => $channel1->id
         ]);
-        Subscription::factory(10000)->create([
+        Subscription::factory(1000)->create([
             'channel_id' => $channel2->id
         ]);
     }
