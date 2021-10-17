@@ -1,14 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+{{--    @dd($video->views)--}}
     <!-- main content -->
     <div class="container-fluid watch_video">
         <div class="row pt-4">
             <div class="col-md-8 video_box">
-{{--                <iframe class="video_responsive" width="100%" height="573"--}}
-{{--                        src="https://www.youtube.com/embed/hoNb6HuNmU0" frameborder="0"--}}
-{{--                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"--}}
-{{--                        allowfullscreen></iframe>--}}
                 <video
                     id="my-video"
                     class="video-js video_responsive"
@@ -18,13 +15,15 @@
                     poster="{{ $video->thumbnail }}"
                     data-setup="{}"
                 >
-                    <source src='{{ asset(Storage::url("videos/{$video->id}/{$video->id}.m3u8")) }}' type="application/x-mpegURL" />
+                    <source src='{{ asset(Storage::url("videos/{$video->id}/{$video->id}.m3u8")) }}'
+                            type="application/x-mpegURL"/>
                 </video>
                 <div class="p-1 pt-3">
                     <div class="title">{{ $video->title }}</div>
                     <div class="row mt-2 border-bottom">
                         <div class="col-7">
-                            <div style="color:#606060;">71,101,624 views • {{ date('M d, Y', strtotime($video->created_at)) }}</div>
+                            <div style="color:#606060;">{{ $video->numeralFormat($video->views) }} {{ Str::plural('view', $video->views) }}
+                                • {{ date('M d, Y', strtotime($video->created_at)) }}</div>
                         </div>
                         <div class="col-5 text-right">
                             <div class="row">
@@ -124,203 +123,49 @@
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-6">Up Next</div>
-                    <div class="col-6 text-right">
-                        AUTOPLAY
-                        <label class="switch">
-                            <input type="checkbox" class="switch-input">
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
-                    </div>
                 </div>
-                <div class="container-fluid video_list">
-                    <a href="#">
-                        <div class="card">
-                            <div class="row p-0">
-                                <div class="col-md-5">
-                                    <img class="video_list_responsive"
-                                         src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg" alt="image" width="100%"
-                                         height="94"/>
-                                </div>
-                                <div class="col-md-7 p-0">
-                                    <p class="mb-1 title"
-                                       title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                                        Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam,
-                                        Amitabh B|Arijit Singh</p>
-                                    <p style="color:#606060;">
-                                        T-Series <i class="fas fa-check-circle"></i> <br>
-                                        70M views • 7 months ago
-                                    </p>
+
+                @forelse($otherVideos as $item)
+                    <div class="container-fluid video_list mb-2">
+                        <a href="{{ route('video.show', $item->id) }}">
+                            <div class="card">
+                                <div class="row p-0">
+                                    <div class="col-md-5">
+                                        <img class="video_list_responsive"
+                                             src="{{ $item->thumbnail }}" alt="image" width="100%"
+                                             height="94"/>
+                                    </div>
+                                    <div class="col-md-7 p-0">
+                                        <p class="mb-1 title"
+                                           title="{{ $item->title }}">
+                                            {{ $item->title }}</p>
+                                        <p style="color:#606060;">
+                                            {{ $item->channel->name }} <i class="fas fa-check-circle"></i> <br>
+                                            {{ $item->numeralFormat($item->views) }} {{ Str::plural('view', $item->views) }} • {{ $item->created_at->diffForHumans() }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                    </a>
-                </div>
-            </div>
-            <div class="container-fluid video_list">
-                <a href="#">
-                    <div class="card">
-                        <div class="row p-0">
-                            <div class="col-md-5">
-                                <img class="video_list_responsive" src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg"
-                                     alt="image" width="100%" height="94"/>
-                            </div>
-                            <div class="col-md-7 p-0">
-                                <p class="mb-1 title"
-                                   title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                                    Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam,
-                                    Amitabh B|Arijit Singh</p>
-                                <p style="color:#606060;">
-                                    T-Series <i class="fas fa-check-circle"></i> <br>
-                                    70M views • 7 months ago
-                                </p>
-                            </div>
-                        </div>
-                </a>
+                        </a>
+                    </div>
+                @empty
+                @endforelse
+
             </div>
         </div>
-        <div class="container-fluid video_list">
-            <a href="#">
-                <div class="card">
-                    <div class="row p-0">
-                        <div class="col-md-5">
-                            <img class="video_list_responsive" src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg"
-                                 alt="image" width="100%" height="94"/>
-                        </div>
-                        <div class="col-md-7 p-0">
-                            <p class="mb-1 title"
-                               title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                                Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh
-                                B|Arijit Singh</p>
-                            <p style="color:#606060;">
-                                T-Series <i class="fas fa-check-circle"></i> <br>
-                                70M views • 7 months ago
-                            </p>
-                        </div>
-                    </div>
-            </a>
-        </div>
-    </div>
-    <div class="container-fluid video_list">
-        <a href="#">
-            <div class="card">
-                <div class="row p-0">
-                    <div class="col-md-5">
-                        <img class="video_list_responsive" src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg"
-                             alt="image" width="100%" height="94"/>
-                    </div>
-                    <div class="col-md-7 p-0">
-                        <p class="mb-1 title"
-                           title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                            Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh
-                            B|Arijit Singh</p>
-                        <p style="color:#606060;">
-                            T-Series <i class="fas fa-check-circle"></i> <br>
-                            70M views • 7 months ago
-                        </p>
-                    </div>
-                </div>
-        </a>
-    </div>
-    </div>
-    <div class="container-fluid video_list">
-        <a href="#">
-            <div class="card">
-                <div class="row p-0">
-                    <div class="col-md-5">
-                        <img class="video_list_responsive" src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg"
-                             alt="image" width="100%" height="94"/>
-                    </div>
-                    <div class="col-md-7 p-0">
-                        <p class="mb-1 title"
-                           title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                            Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh
-                            B|Arijit Singh</p>
-                        <p style="color:#606060;">
-                            T-Series <i class="fas fa-check-circle"></i> <br>
-                            70M views • 7 months ago
-                        </p>
-                    </div>
-                </div>
-        </a>
-    </div>
-    </div>
-    <div class="container-fluid video_list">
-        <a href="#">
-            <div class="card">
-                <div class="row p-0">
-                    <div class="col-md-5">
-                        <img class="video_list_responsive" src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg"
-                             alt="image" width="100%" height="94"/>
-                    </div>
-                    <div class="col-md-7 p-0">
-                        <p class="mb-1 title"
-                           title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                            Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh
-                            B|Arijit Singh</p>
-                        <p style="color:#606060;">
-                            T-Series <i class="fas fa-check-circle"></i> <br>
-                            70M views • 7 months ago
-                        </p>
-                    </div>
-                </div>
-        </a>
-    </div>
-    </div>
-    <div class="container-fluid video_list">
-        <a href="#">
-            <div class="card">
-                <div class="row p-0">
-                    <div class="col-md-5">
-                        <img class="video_list_responsive" src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg"
-                             alt="image" width="100%" height="94"/>
-                    </div>
-                    <div class="col-md-7 p-0">
-                        <p class="mb-1 title"
-                           title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                            Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh
-                            B|Arijit Singh</p>
-                        <p style="color:#606060;">
-                            T-Series <i class="fas fa-check-circle"></i> <br>
-                            70M views • 7 months ago
-                        </p>
-                    </div>
-                </div>
-        </a>
-    </div>
-    </div>
-    <div class="container-fluid video_list">
-        <a href="#">
-            <div class="card">
-                <div class="row p-0">
-                    <div class="col-md-5">
-                        <img class="video_list_responsive" src="https://i.ytimg.com/vi/hoNb6HuNmU0/hq720.jpg"
-                             alt="image" width="100%" height="94"/>
-                    </div>
-                    <div class="col-md-7 p-0">
-                        <p class="mb-1 title"
-                           title="Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh B|Arijit Singh">
-                            Full Song: KHAIRIYAT (BONUS TRACK) | CHHICHHORE | Sushant, Shraddha | Pritam, Amitabh
-                            B|Arijit Singh</p>
-                        <p style="color:#606060;">
-                            T-Series <i class="fas fa-check-circle"></i> <br>
-                            70M views • 7 months ago
-                        </p>
-                    </div>
-                </div>
-        </a>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
 
     <!-- main content -->
 @endsection
 
 @push('style')
-    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet"/>
 @endpush
 
 @push('script')
     <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+    <script>
+        window.CURRENT_VIDEO_ID = "{{ $video->id }}"
+    </script>
+    <script src="{{ asset('js/player-view.js') }}"></script>
 @endpush

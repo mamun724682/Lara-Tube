@@ -22,10 +22,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('channels', \App\Http\Controllers\ChannelController::class);
 Route::get('videos/{video}', [\App\Http\Controllers\VideoController::class, 'show'])->name('video.show');
+Route::put('videos/{video}', [\App\Http\Controllers\VideoController::class, 'updateViews']);
 
 Route::middleware('auth')->group(function (){
     Route::resource('channels/{channel}/subscription', \App\Http\Controllers\SubscriptionController::class)->only('store', 'destroy');
 
     Route::get('upload/{channel}/videos', [\App\Http\Controllers\UploadVideoController::class, 'index'])->name('upload.videos');
     Route::post('upload/{channel}/videos', [\App\Http\Controllers\UploadVideoController::class, 'store']);
+    Route::get('my-videos', [\App\Http\Controllers\VideoController::class, 'myVideos'])->name('my.videos');
 });
