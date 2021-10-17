@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-5 text-right">
                                     <div class="row">
-                                        <div class="col-3 border-bottom border-dark">
+                                        <div class="col-3 ">
                                             <a href="#" style="color:#606060;" title="I like this">
                                                 <svg style="height: 18px; width: 18px;margin: auto;"
                                                      viewBox="0 0 24 24">
@@ -51,7 +51,7 @@
                                                 500K
                                             </a>
                                         </div>
-                                        <div class="col-3 border-bottom border-dark">
+                                        <div class="col-3">
                                             <a href="#" style="color:#606060;" title="I dislike this">
                                                 <svg style="height: 18px; width: 18px;margin: auto;"
                                                      viewBox="0 0 24 24">
@@ -60,28 +60,6 @@
                                                         fill="#606060"></path>
                                                 </svg>
                                                 17K
-                                            </a>
-                                        </div>
-                                        <div class="col-3">
-                                            <a href="#" style="color:#606060;" title="Share">
-                                                <svg style="height: 18px; width: 18px;margin: auto;"
-                                                     viewBox="0 0 24 24">
-                                                    <path
-                                                        d="M11.7333 8.26667V4L19.2 11.4667L11.7333 18.9333V14.56C6.4 14.56 2.66667 16.2667 0 20C1.06667 14.6667 4.26667 9.33333 11.7333 8.26667Z"
-                                                        fill="#606060"></path>
-                                                </svg>
-                                                SHARE
-                                            </a>
-                                        </div>
-                                        <div class="col-3">
-                                            <a href="#" style="color:#606060;" title="Save">
-                                                <svg style="height: 18px; width: 18px;margin: auto;"
-                                                     viewBox="0 0 24 24">
-                                                    <path
-                                                        d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"
-                                                        fill="#606060"></path>
-                                                </svg>
-                                                SAVE
                                             </a>
                                         </div>
                                     </div>
