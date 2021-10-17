@@ -8,7 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-require('./components/subscribe-button');
+Vue.component('subscribe-button', require('./components/subscribe-button').default)
 require('./components/channel-uploads');
 
 const app = new Vue({

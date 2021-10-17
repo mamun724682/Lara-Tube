@@ -13,6 +13,11 @@ class Video extends Model
         return $this->belongsTo(Channel::class)->withDefault();
     }
 
+    public function editable()
+    {
+        return auth()->check() && $this->channel->user_id == auth()->id();
+    }
+
     public function numeralFormat($num) {
 
         if($num>1000) {
