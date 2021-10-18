@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    {{--    @dd($video->views)--}}
     <!-- main content -->
     <div class="container-fluid watch_video">
         <div class="row pt-4">
@@ -73,7 +72,7 @@
                             <div class="row mb-4">
                                 <div class="col-12 m-4" style="color: #303030; font-weight: bold">10,699 Comments</div>
                                 <div class="col-1">
-                                    <img id="img" width="30" src="images/icon/avatar.png" class="rounded-circle">
+                                    <img id="img" width="30" src="{{ $video->channel->image() }}" class="rounded-circle">
                                 </div>
                                 <div class="col-11">
                                     <form>
@@ -82,7 +81,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <!-- <div class="row mt-4">
+                            <div class="row mt-4">
                                 <div class="col-1">
                                     <img id="img" width="48" src="images/icon/avatar.png" class="rounded-circle">
                                 </div>
@@ -99,11 +98,13 @@
                                     <div><b>Vasudha Deshpande</b> 3 months ago</div>
                                     <div>Mummy ke taane aur arijit ke gaane... Dil ko chhu jaate hain❤😘</div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
+
                         @if($video->editable())
                     </form>
                 @endif
+
             </div>
             <div class="col-md-4">
                 <div class="row">
