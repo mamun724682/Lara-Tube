@@ -69,36 +69,12 @@
                                 </div>
 
                             </div>
-                            <div class="row mb-4">
+                            <div class="row">
                                 <div class="col-12 m-4" style="color: #303030; font-weight: bold">10,699 Comments</div>
-                                <div class="col-1">
-                                    <img id="img" width="30" src="{{ $video->channel->image() }}" class="rounded-circle">
-                                </div>
-                                <div class="col-11">
-                                    <form>
-                                        <input type="text" name="comment" class="input_comment"
-                                               placeholder="Add a public comment...">
-                                    </form>
-                                </div>
                             </div>
-                            <div class="row mt-4">
-                                <div class="col-1">
-                                    <img id="img" width="48" src="images/icon/avatar.png" class="rounded-circle">
-                                </div>
-                                <div class="col-11">
-                                    <div><b>Vasudha Deshpande</b> 3 months ago</div>
-                                    <div>Mummy ke taane aur arijit ke gaane... Dil ko chhu jaate hain❤😘</div>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-1">
-                                    <img id="img" width="48" src="images/icon/avatar.png" class="rounded-circle">
-                                </div>
-                                <div class="col-11">
-                                    <div><b>Vasudha Deshpande</b> 3 months ago</div>
-                                    <div>Mummy ke taane aur arijit ke gaane... Dil ko chhu jaate hain❤😘</div>
-                                </div>
-                            </div>
+
+                            <comments :video="{{ $video }}"></comments>
+
                         </div>
 
                         @if($video->editable())

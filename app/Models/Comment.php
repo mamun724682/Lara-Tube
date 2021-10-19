@@ -8,6 +8,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $with = ['user'];
+
     public function video()
     {
         return $this->belongsTo(Video::class)->withDefault();
