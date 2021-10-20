@@ -1,12 +1,12 @@
 <template>
     <div class="row">
-        <div class="col-3 ">
+        <div class="col-2">
             <a @click="vote('up')" style="color:#606060; cursor: pointer" title="I like this">
                 <i class="fa fa-thumbs-up w-auto" :class="{ 'text-primary' : upvoted }" style="font-size: 15px"></i>
                 {{ upvotes_count }}
             </a>
         </div>
-        <div class="col-3">
+        <div class="col-2">
             <a @click="vote('down')" style="color:#606060; cursor: pointer" title="I dislike this">
                 <i class="fa fa-thumbs-down w-auto" :class="{ 'text-primary' : downvoted }" style="font-size: 15px"></i>
                 {{ downvotes_count }}

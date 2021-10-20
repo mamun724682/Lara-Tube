@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="row mb-4" v-if="authUser">
-            <div class="col-1">
+        <div class="row mb-4">
+            <div class="col-1" v-if="authUser">
                 <avatar :username="authUser.name" :size="30"></avatar>
             </div>
             <div class="col-11">
                 <form>
-                    <input type="text" name="comment" class="input_comment"
+                    <input v-if="authUser" type="text" name="comment" class="input_comment"
                            placeholder="Add a public reply...">
                 </form>
                 <div v-for="reply in replies.data" class="row my-2">
@@ -16,6 +16,9 @@
                     <div class="col-11">
                         <div><b>{{ reply.user.name }}</b></div>
                         <div>{{ reply.body }}</div>
+                        <div class="mt-2 mb-3">
+                            <votes :default_votes="reply.votes" :entity_owner="reply.user.id" :entity_id="reply.id"></votes>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2121,22 +2121,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2205,6 +2189,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -39436,7 +39423,20 @@ var render = function() {
               _vm._v(" "),
               _c("div", [_vm._v(_vm._s(comment.body))]),
               _vm._v(" "),
-              _vm._m(1, true),
+              _c(
+                "div",
+                { staticClass: "mt-2 mb-3" },
+                [
+                  _c("votes", {
+                    attrs: {
+                      default_votes: comment.votes,
+                      entity_owner: comment.user.id,
+                      entity_id: comment.id
+                    }
+                  })
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("replies", { attrs: { comment: comment } })
             ],
@@ -39479,57 +39479,6 @@ var staticRenderFns = [
         })
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-2 mb-3" }, [
-      _c("div", { staticClass: "col-1" }, [
-        _c(
-          "a",
-          {
-            staticStyle: { color: "#606060", cursor: "pointer" },
-            attrs: { title: "I like this" }
-          },
-          [
-            _c("i", {
-              staticClass: "fa fa-thumbs-up w-auto",
-              staticStyle: { "font-size": "15px" }
-            }),
-            _vm._v("\n                        5\n                    ")
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-1" }, [
-        _c(
-          "a",
-          {
-            staticStyle: { color: "#606060", cursor: "pointer" },
-            attrs: { title: "I dislike this" }
-          },
-          [
-            _c("i", {
-              staticClass: "fa fa-thumbs-down w-auto",
-              staticStyle: { "font-size": "15px" }
-            }),
-            _vm._v("\n                        45\n                    ")
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-1" }, [
-        _c(
-          "a",
-          {
-            staticStyle: { color: "#606060", cursor: "pointer" },
-            attrs: { title: "I dislike this" }
-          },
-          [_vm._v("\n                        Reply\n                    ")]
-        )
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -39555,48 +39504,74 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.authUser
-      ? _c("div", { staticClass: "row mb-4" }, [
-          _c(
+    _c("div", { staticClass: "row mb-4" }, [
+      _vm.authUser
+        ? _c(
             "div",
             { staticClass: "col-1" },
             [
               _c("avatar", { attrs: { username: _vm.authUser.name, size: 30 } })
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-11" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._l(_vm.replies.data, function(reply) {
-                return _c("div", { staticClass: "row my-2" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-1" },
-                    [
-                      _c("avatar", {
-                        attrs: { username: reply.user.name, size: 30 }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-11" }, [
-                    _c("div", [_c("b", [_vm._v(_vm._s(reply.user.name))])]),
-                    _vm._v(" "),
-                    _c("div", [_vm._v(_vm._s(reply.body))])
-                  ])
-                ])
-              })
-            ],
-            2
           )
-        ])
-      : _vm._e(),
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-11" },
+        [
+          _c("form", [
+            _vm.authUser
+              ? _c("input", {
+                  staticClass: "input_comment",
+                  attrs: {
+                    type: "text",
+                    name: "comment",
+                    placeholder: "Add a public reply..."
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.replies.data, function(reply) {
+            return _c("div", { staticClass: "row my-2" }, [
+              _c(
+                "div",
+                { staticClass: "col-1" },
+                [
+                  _c("avatar", {
+                    attrs: { username: reply.user.name, size: 30 }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-11" }, [
+                _c("div", [_c("b", [_vm._v(_vm._s(reply.user.name))])]),
+                _vm._v(" "),
+                _c("div", [_vm._v(_vm._s(reply.body))]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "mt-2 mb-3" },
+                  [
+                    _c("votes", {
+                      attrs: {
+                        default_votes: reply.votes,
+                        entity_owner: reply.user.id,
+                        entity_id: reply.id
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
+          })
+        ],
+        2
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "d-flex justify-content-center my-3" }, [
       _vm.comment.replyCount > 0 && _vm.replies.next_page_url
@@ -39613,23 +39588,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", [
-      _c("input", {
-        staticClass: "input_comment",
-        attrs: {
-          type: "text",
-          name: "comment",
-          placeholder: "Add a public reply..."
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39698,7 +39657,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-3 " }, [
+    _c("div", { staticClass: "col-2" }, [
       _c(
         "a",
         {
@@ -39721,7 +39680,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-3" }, [
+    _c("div", { staticClass: "col-2" }, [
       _c(
         "a",
         {

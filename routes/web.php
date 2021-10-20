@@ -34,5 +34,5 @@ Route::middleware('auth')->group(function (){
     Route::get('my-videos', [\App\Http\Controllers\VideoController::class, 'myVideos'])->name('my.videos');
     Route::post('videos/{video}/update', [\App\Http\Controllers\VideoController::class, 'update'])->name('video.update');
 
-    Route::post('vote/{video}/{type}', [\App\Http\Controllers\VoteController::class, 'vote']);
+    Route::post('vote/{entityId}/{type}', [\App\Http\Controllers\VoteController::class, 'vote']);
 });

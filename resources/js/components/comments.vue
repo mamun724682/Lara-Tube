@@ -18,24 +18,8 @@
         <div class="col-11">
             <div><b>{{ comment.user.name }}</b></div>
             <div>{{ comment.body }}</div>
-            <div class="row mt-2 mb-3">
-                <div class="col-1">
-                    <a style="color:#606060; cursor: pointer" title="I like this">
-                        <i class="fa fa-thumbs-up w-auto" style="font-size: 15px"></i>
-                        5
-                    </a>
-                </div>
-                <div class="col-1">
-                    <a style="color:#606060; cursor: pointer" title="I dislike this">
-                        <i class="fa fa-thumbs-down w-auto" style="font-size: 15px"></i>
-                        45
-                    </a>
-                </div>
-                <div class="col-1">
-                    <a style="color:#606060; cursor: pointer" title="I dislike this">
-                        Reply
-                    </a>
-                </div>
+            <div class="mt-2 mb-3">
+                <votes :default_votes="comment.votes" :entity_owner="comment.user.id" :entity_id="comment.id"></votes>
             </div>
 
             <replies :comment="comment"></replies>

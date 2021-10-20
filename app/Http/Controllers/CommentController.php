@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function index(Video $video)
     {
-        return $video->comments()->paginate(10);
+        return $video->comments()->latest()->paginate(10);
     }
 
     public function show(Comment $comment)
