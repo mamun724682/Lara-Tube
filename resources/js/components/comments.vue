@@ -1,72 +1,77 @@
 <template>
-<div>
-    <div class="row mb-4" v-if="authUser">
-        <div class="col-1">
-            <avatar :username="authUser.name" :size="30"></avatar>
-        </div>
-        <div class="col-11">
-            <form>
-                <input type="text" name="comment" class="input_comment"
-                       placeholder="Add a public comment...">
-            </form>
-        </div>
-    </div>
-    <div class="row mt-4" v-for="comment in comments.data" :key="comment.id">
-        <div class="col-1">
-            <avatar :username="comment.user.name" :size="48"></avatar>
-        </div>
-        <div class="col-11">
-            <div><b>{{ comment.user.name }}</b></div>
-            <div>{{ comment.body }}</div>
-            <div class="mt-2 mb-3">
-                <votes :default_votes="comment.votes" :entity_owner="comment.user.id" :entity_id="comment.id"></votes>
+    <div>
+        <div class="row mb-4" v-if="authUser">
+            <div class="col-1">
+                <avatar :username="authUser.name" :size="30"></avatar>
             </div>
+            <div class="col-11">
+                <input v-model="newComment" type="text" class="input_comment"
+                       placeholder="Add a public comment..." v-on:keyup.enter="addComment">
+            </div>
+        </div>
 
-            <replies :comment="comment"></replies>
+        <comment v-for="comment in comments.data" :key="comment.id" :comment="comment"></comment>
 
+        <div class="d-flex justify-content-center">
+            <button v-if="comments.next_page_url" @click="fetchComments" type="button"
+                    class="btn btn-success text-center">Load More
+            </button>
+            <p v-else>No more comment to show :)</p>
         </div>
     </div>
-    <div class="d-flex justify-content-center">
-        <button  v-if="comments.next_page_url" @click="fetchComments" type="button" class="btn btn-success text-center">Load More</button>
-        <p v-else>No more comment to show :)</p>
-    </div>
-</div>
 </template>
 
 <script>
     import Avatar from 'vue-avatar';
-    import replies from "./replies";
+    import Comment from './comment';
 
     export default {
         name: "comments",
-        props:['video'],
+        props: ['video'],
         components: {
             Avatar,
-            replies
+            Comment
         },
         mounted() {
             this.fetchComments();
         },
-        data(){
+        data() {
             return {
                 comments: {
                     data: []
                 },
-                authUser: __auth()
+                authUser: __auth(),
+                newComment: ''
             }
         },
         methods: {
-            fetchComments(){
+            fetchComments() {
                 const url = this.comments.next_page_url ? this.comments.next_page_url : `/videos/${this.video.id}/comments`
                 axios.get(url)
-                    .then(({ data }) => {
+                    .then(({data}) => {
                         this.comments = {
                             ...data,
-                            data:[
+                            data: [
                                 ...this.comments.data,
                                 ...data.data
                             ]
                         }
+                    })
+            },
+            addComment() {
+                axios.post(`/comments/${this.video.id}`, {
+                    body: this.newComment
+                })
+                    .then(({data}) => {
+                        this.comments = {
+                            ...this.comments,
+                            data: [
+                                data,
+                                ...this.comments.data
+                            ]
+                        }
+
+                        this.newComment = ''
                     })
             }
         }

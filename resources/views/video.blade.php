@@ -18,12 +18,14 @@
                             type="application/x-mpegURL"/>
                 </video>
 
-                @if($video->editable())
-                    <form action="{{ route('video.update', $video->id) }}" method="post">
-                        @csrf
-                        @endif
 
-                        <div class="p-1 pt-3">
+                <div class="p-1 pt-3">
+
+                    @if($video->editable())
+                        <form action="{{ route('video.update', $video->id) }}" method="post">
+                            @csrf
+                            @endif
+
                             <div class="title">
                                 @if($video->editable())
                                     <input type="text" name="title" class="form-control" value="{{ $video->title }}">
@@ -39,7 +41,9 @@
                                 </div>
                                 <div class="col-5 text-right">
 
-                                    <votes :default_votes="{{ $video->votes }}" entity_owner="{{ $video->channel->user_id }}" entity_id="{{ $video->id }}"></votes>
+                                    <votes :default_votes="{{ $video->votes }}"
+                                           entity_owner="{{ $video->channel->user_id }}"
+                                           entity_id="{{ $video->id }}"></votes>
 
                                 </div>
                             </div>
@@ -56,8 +60,10 @@
                                     </p>
 
                                     @if($video->editable())
-                                        <textarea name="description" class="form-control">{!! $video->description !!}</textarea>
-                                        <button type="submit" class="btn btn-primary mt-2 mb-2 float-right">Update</button>
+                                        <textarea name="description"
+                                                  class="form-control">{!! $video->description !!}</textarea>
+                                        <button type="submit" class="btn btn-primary mt-2 mb-2 float-right">Update
+                                        </button>
                                     @else
                                         <p>{!! $video->description !!}</p>
                                     @endif
@@ -69,17 +75,21 @@
                                 </div>
 
                             </div>
-                            <div class="row">
-                                <div class="col-12 m-4" style="color: #303030; font-weight: bold">10,699 Comments</div>
-                            </div>
 
-                            <comments :video="{{ $video }}"></comments>
+                            @if($video->editable())
+                        </form>
+                    @endif
 
+                    <div class="row">
+                        <div class="col-12 m-4"
+                             style="color: #303030; font-weight: bold">{{ $video->comments->count() }} Comments
                         </div>
+                    </div>
 
-                        @if($video->editable())
-                    </form>
-                @endif
+                    <comments :video="{{ $video }}"></comments>
+
+                </div>
+
 
             </div>
             <div class="col-md-4">

@@ -1,14 +1,7 @@
 <template>
     <div>
         <div class="row mb-4">
-            <div class="col-1" v-if="authUser">
-                <avatar :username="authUser.name" :size="30"></avatar>
-            </div>
             <div class="col-11">
-                <form>
-                    <input v-if="authUser" type="text" name="comment" class="input_comment"
-                           placeholder="Add a public reply...">
-                </form>
                 <div v-for="reply in replies.data" class="row my-2">
                     <div class="col-1">
                         <avatar :username="reply.user.name" :size="30"></avatar>
