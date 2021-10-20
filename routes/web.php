@@ -24,6 +24,7 @@ Route::resource('channels', \App\Http\Controllers\ChannelController::class);
 Route::get('videos/{video}', [\App\Http\Controllers\VideoController::class, 'show'])->name('video.show');
 Route::put('videos/{video}', [\App\Http\Controllers\VideoController::class, 'updateViews']);
 Route::get('videos/{video}/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::get('comments/{comment}/replies', [\App\Http\Controllers\CommentController::class, 'show']);
 
 Route::middleware('auth')->group(function (){
     Route::resource('channels/{channel}/subscription', \App\Http\Controllers\SubscriptionController::class)->only('store', 'destroy');

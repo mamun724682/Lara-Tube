@@ -31,23 +31,15 @@
                         45
                     </a>
                 </div>
-                <div class="col-1" v-if="authUser">
-                    <a @click="showReplyForm" style="color:#606060; cursor: pointer" title="I dislike this">
+                <div class="col-1">
+                    <a style="color:#606060; cursor: pointer" title="I dislike this">
                         Reply
                     </a>
                 </div>
             </div>
-            <div class="row mb-4" v-if="authUser" v-show="showReply">
-                <div class="col-1">
-                    <avatar :username="authUser.name" :size="30"></avatar>
-                </div>
-                <div class="col-11">
-                    <form>
-                        <input type="text" name="comment" class="input_comment"
-                               placeholder="Add a public reply...">
-                    </form>
-                </div>
-            </div>
+
+            <replies :comment="comment"></replies>
+
         </div>
     </div>
     <div class="d-flex justify-content-center">
@@ -59,12 +51,14 @@
 
 <script>
     import Avatar from 'vue-avatar';
+    import replies from "./replies";
 
     export default {
         name: "comments",
         props:['video'],
         components: {
-            Avatar
+            Avatar,
+            replies
         },
         mounted() {
             this.fetchComments();
@@ -74,8 +68,7 @@
                 comments: {
                     data: []
                 },
-                authUser: __auth(),
-                showReply: false
+                authUser: __auth()
             }
         },
         methods: {
@@ -91,9 +84,6 @@
                             ]
                         }
                     })
-            },
-            showReplyForm(){
-                this.showReply = !this.showReply
             }
         }
     }

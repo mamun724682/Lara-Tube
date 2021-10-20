@@ -9,6 +9,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $with = ['user'];
+    protected $appends = ['replyCount'];
 
     public function video()
     {
@@ -23,5 +24,10 @@ class Comment extends Model
     public function replies()
     {
         return $this->hasMany(Comment::class, 'comment_id')->whereNotNull('comment_id');
+    }
+
+    public function getReplyCountAttribute()
+    {
+        return $this->replies->count();
     }
 }
