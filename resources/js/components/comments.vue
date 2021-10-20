@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <comment v-for="comment in comments.data" :key="comment.id" :comment="comment"></comment>
+        <comment v-for="comment in comments.data" :key="comment.id" :comment="comment" :video="video"></comment>
 
         <div class="d-flex justify-content-center">
             <button v-if="comments.next_page_url" @click="fetchComments" type="button"
@@ -59,10 +59,11 @@
                     })
             },
             addComment() {
+                if (!this.newComment) return
+
                 axios.post(`/comments/${this.video.id}`, {
                     body: this.newComment
-                })
-                    .then(({data}) => {
+                }).then(({data}) => {
                         this.comments = {
                             ...this.comments,
                             data: [

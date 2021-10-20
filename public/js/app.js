@@ -2103,14 +2103,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "comment",
   props: {
     comment: {
+      required: true,
+      "default": function _default() {
+        return {};
+      }
+    },
+    video: {
       required: true,
       "default": function _default() {
         return {};
@@ -2124,8 +2128,26 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       authUser: __auth(),
-      showReplyForm: false
+      showReplyForm: false,
+      newReply: ''
     };
+  },
+  methods: {
+    addReply: function addReply() {
+      var _this = this;
+
+      if (!this.newReply) return;
+      axios.post("/comments/".concat(this.video.id), {
+        body: this.newReply,
+        comment_id: this.comment.id
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.$refs.replies.addReply(data);
+
+        _this.newReply = '';
+      });
+    }
   }
 });
 
@@ -2222,6 +2244,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addComment: function addComment() {
       var _this2 = this;
 
+      if (!this.newComment) return;
       axios.post("/comments/".concat(this.video.id), {
         body: this.newComment
       }).then(function (_ref2) {
@@ -2317,6 +2340,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.replies = _objectSpread(_objectSpread({}, data), {}, {
           data: [].concat(_toConsumableArray(_this.replies.data), _toConsumableArray(data.data))
         });
+      });
+    },
+    addReply: function addReply(reply) {
+      this.replies = _objectSpread(_objectSpread({}, this.replies), {}, {
+        data: [].concat(_toConsumableArray(this.replies.data), [reply])
       });
     }
   }
@@ -39601,23 +39629,52 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "col-11" }, [
-                _c("form", [
-                  _vm.authUser
-                    ? _c("input", {
-                        staticClass: "input_comment",
-                        attrs: {
-                          type: "text",
-                          name: "comment",
-                          placeholder: "Add a public reply..."
+                _vm.authUser
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newReply,
+                          expression: "newReply"
                         }
-                      })
-                    : _vm._e()
-                ])
+                      ],
+                      staticClass: "input_comment",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Add a public reply..."
+                      },
+                      domProps: { value: _vm.newReply },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.addReply.apply(null, arguments)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.newReply = $event.target.value
+                        }
+                      }
+                    })
+                  : _vm._e()
               ])
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("replies", { attrs: { comment: _vm.comment } })
+        _c("replies", { ref: "replies", attrs: { comment: _vm.comment } })
       ],
       1
     )
@@ -39698,7 +39755,10 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.comments.data, function(comment) {
-        return _c("comment", { key: comment.id, attrs: { comment: comment } })
+        return _c("comment", {
+          key: comment.id,
+          attrs: { comment: comment, video: _vm.video }
+        })
       }),
       _vm._v(" "),
       _c("div", { staticClass: "d-flex justify-content-center" }, [

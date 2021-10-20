@@ -52,6 +52,15 @@
                             ]
                         }
                     })
+            },
+            addReply(reply){
+                this.replies = {
+                    ...this.replies,
+                    data:[
+                        ...this.replies.data,
+                        reply
+                    ]
+                }
             }
         }
     }

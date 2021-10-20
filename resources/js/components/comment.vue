@@ -22,14 +22,12 @@
                     <avatar :username="authUser.name" :size="30"></avatar>
                 </div>
                 <div class="col-11">
-                    <form>
-                        <input v-if="authUser" type="text" name="comment" class="input_comment"
+                    <input v-model="newReply" v-if="authUser" v-on:keyup.enter="addReply" type="text" class="input_comment"
                                placeholder="Add a public reply...">
-                    </form>
                 </div>
             </div>
 
-            <replies :comment="comment"></replies>
+            <replies ref="replies" :comment="comment"></replies>
 
         </div>
     </div>
@@ -45,6 +43,10 @@
             comment: {
                 required: true,
                 default: () => ({})
+            },
+            video: {
+                required: true,
+                default: () => ({})
             }
         },
         components: {
@@ -54,9 +56,25 @@
         data() {
             return {
                 authUser: __auth(),
-                showReplyForm: false
+                showReplyForm: false,
+                newReply:''
             }
         },
+        methods:{
+            addReply(){
+                if (!this.newReply) return
+
+                axios.post(`/comments/${this.video.id}`, {
+                    body: this.newReply,
+                    comment_id: this.comment.id
+                }).then(({data}) => {
+
+                    this.$refs.replies.addReply(data)
+
+                    this.newReply = ''
+                })
+            }
+        }
     }
 </script>
 
