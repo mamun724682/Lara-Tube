@@ -78,29 +78,35 @@
 
         <hr>
         <div class="container-fluid">
-            <div class="grid_title">My Subscription</div>
+            <div class="grid_title">Videos</div>
             <div class="card p-2 bg-white">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Subscription details</th>
-                        <th>Started on</th>
-                        <th>Expiry on</th>
-                        <th>State</th>
+                        <th>Thumbnail</th>
+                        <th>Title</th>
+                        <th>Views</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Starter</td>
-                        <td>21/05/2020</td>
-                        <td>30/06/2020</td>
-                        <td>Active</td>
-                        <td><a href="#"><i class="fas fa-times"></i> Cancel</a></td>
-                    </tr>
-
+                        @forelse($videos as $video)
+                            <tr>
+                                <td><img src="{{ $video->thumbnail }}" width="40px" alt="" class="rounded"></td>
+                                <td>{{ $video->title }}</td>
+                                <td>{{ $video->views }}</td>
+                                <td>{{ $video->percentage == 100 ? 'Live' : 'Processing' }}</td>
+                                <td><a href="{{ route('video.show', $video->id) }}"><i class="fas fa-eye"></i> View</a></td>
+                            </tr>
+                        @empty
+                        @endforelse
                     </tbody>
                 </table>
+
+                <div class="d-flex justify-content-center">
+                    {{ $videos->links() }}
+                </div>
             </div>
 
         </div>
